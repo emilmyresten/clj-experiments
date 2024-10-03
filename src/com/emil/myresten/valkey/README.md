@@ -12,16 +12,16 @@ podman run --rm -p 6379:6379 docker.io/valkey/valkey:latest
 
 Valkey takes requests over tcp.
 
-SET <key> <value>
-GET <key>
+SET \<key> \<value>
+GET \<key>
 
 Getting non-existing key returns nil.
 
 SETEX to set key with ttl.
-SETEX <key> <seconds> <val>
+SETEX \<key> \<seconds> \<val>
 
 keys are often namespaced with colon like
 user:1000:username
 
 
-Can use regular redis client libraries. Using Jedis in this case. its MIT licensed. 
+Can use regular redis client libraries. Using [Jedis](https://github.com/redis/jedis/blob/master/LICENSE) in this case. its MIT licensed. 
