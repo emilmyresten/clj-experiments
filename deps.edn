@@ -1,2 +1,3 @@
 {:deps {com.datomic/local              {:mvn/version "1.0.285"}
-        org.apache.kafka/kafka-clients {:mvn/version "3.8.0"}}}
+        org.apache.kafka/kafka-clients {:mvn/version "3.8.0"}
+        redis.clients/jedis            {:mvn/version "5.2.0"}}}
