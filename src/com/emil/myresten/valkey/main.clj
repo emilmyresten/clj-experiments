@@ -7,6 +7,11 @@
     port :port}]
   (Jedis. host port))
 
+(defn authenticate
+  [{password :password
+    client :client}]
+  (.auth client password))
+
 (defn valkey:setex
   [{client :client
     key    :key
@@ -23,7 +28,10 @@
 (comment
   (def client (create-client {:host "127.0.0.1"
                               :port 6379}))
+
   (.isConnected client)
+
+  (authenticate {:password "password" :client client})
 
 
   (def some-key "some-type:some-identifier:some-field")
