@@ -92,6 +92,13 @@
     table :table}]
   (jdbc/execute! db [(str "DELETE FROM " table)]))
 
+(defn get-size
+  [{db :db
+    table :table}]
+  (jdbc/execute! db ["SELECT segment_name TableName, bytes/1024/1024 SizeMB
+                      FROM user_segments
+                      WHERE segment_type = 'TABLE' AND segment_name = ?" (.toUpperCase table)]))
+
 (defn perform-benchmark!
   [{db                    :db
     table                 :table
@@ -123,9 +130,9 @@
   (count-table {:db    connection
                 :table "byte_uuids"})
 
-  (clear-table {:db connection
+  (clear-table {:db    connection
                 :table "varchar_uuids"})
-  (clear-table {:db connection
+  (clear-table {:db    connection
                 :table "byte_uuids"})
 
 
@@ -133,6 +140,9 @@
   (perform-benchmark! {:db connection :table "varchar_uuids" :rows rows :uuid-cast-fn uuid->string})
   (perform-benchmark! {:db connection :table "byte_uuids" :rows rows :uuid-cast-fn uuid->bytes})
 
+
+  (get-size {:db connection :table "varchar_uuids"})
+  (get-size {:db connection :table "byte_uuids"})
 
   ;Starting benchmark for varchar_uuids , inserting 1000000 rows
   ;"Elapsed time: 312832.156625 msecs"
@@ -143,4 +153,11 @@
   ;"Elapsed time: 300366.2305 msecs"
   ;table count: [{:COUNT(*) 1000000M}]
   ;Select-one: "Elapsed time: 0.558792 msecs"
+
+  ;Size diff on 1000000 rows:
+  ;TableName        SizeMB
+  ;___________________________
+  ;VARCHAR_UUIDS           62
+  ;BYTE_UUIDS              40
+
   )
