@@ -132,4 +132,15 @@
   (def rows 1000000)
   (perform-benchmark! {:db connection :table "varchar_uuids" :rows rows :uuid-cast-fn uuid->string})
   (perform-benchmark! {:db connection :table "byte_uuids" :rows rows :uuid-cast-fn uuid->bytes})
+
+
+  ;Starting benchmark for varchar_uuids , inserting 1000000 rows
+  ;"Elapsed time: 312832.156625 msecs"
+  ;table count: [{:COUNT(*) 1000000M}]
+  ;Select-one: "Elapsed time: 0.498 msecs"
+  ;
+  ;Starting benchmark for byte_uuids , inserting 1000000 rows
+  ;"Elapsed time: 300366.2305 msecs"
+  ;table count: [{:COUNT(*) 1000000M}]
+  ;Select-one: "Elapsed time: 0.558792 msecs"
   )
